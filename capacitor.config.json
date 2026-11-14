@@ -1,0 +1,6 @@
+{
+  "appId": "com.famaferme.app",
+  "appName": "Fama-Ferme",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

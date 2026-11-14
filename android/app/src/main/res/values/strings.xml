@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Fama-Ferme</string>
+    <string name="title_activity_main">Fama-Ferme</string>
+    <string name="package_name">com.famaferme.app</string>
+    <string name="custom_url_scheme">com.famaferme.app</string>
+</resources>
