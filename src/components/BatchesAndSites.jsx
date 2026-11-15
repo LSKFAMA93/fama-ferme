@@ -207,62 +207,66 @@ export default function BatchesAndSites({ data, onAddBatch, onAddBuilding, onAdd
           <div className="box-header">
             <h3>🏠 Bâtiments & Poulaillers ({buildings.length})</h3>
           </div>
-          <table className="app-table">
-            <thead>
-              <tr>
-                <th>Nom</th>
-                <th>Site</th>
-                <th>Capacité</th>
-                <th>Affectation actuelle</th>
-              </tr>
-            </thead>
-            <tbody>
-              {buildings.map((bld) => {
-                const site = sites.find((s) => s.id === bld.siteId)
-                const assignedBatches = batches.filter((b) => b.buildingId === bld.id)
-                return (
-                  <tr key={bld.id}>
-                    <td>
-                      <strong>{bld.name}</strong>
-                    </td>
-                    <td>{site?.name || '-'}</td>
-                    <td>{bld.capacity ? `${bld.capacity} sujets` : 'N/C'}</td>
-                    <td>
-                      {assignedBatches.length > 0
-                        ? assignedBatches.map((b) => b.name).join(', ')
-                        : 'Libre'}
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+          <div className="table-responsive">
+            <table className="app-table">
+              <thead>
+                <tr>
+                  <th>Nom</th>
+                  <th>Site</th>
+                  <th>Capacité</th>
+                  <th>Affectation actuelle</th>
+                </tr>
+              </thead>
+              <tbody>
+                {buildings.map((bld) => {
+                  const site = sites.find((s) => s.id === bld.siteId)
+                  const assignedBatches = batches.filter((b) => b.buildingId === bld.id)
+                  return (
+                    <tr key={bld.id}>
+                      <td>
+                        <strong>{bld.name}</strong>
+                      </td>
+                      <td>{site?.name || '-'}</td>
+                      <td>{bld.capacity ? `${bld.capacity} sujets` : 'N/C'}</td>
+                      <td>
+                        {assignedBatches.length > 0
+                          ? assignedBatches.map((b) => b.name).join(', ')
+                          : 'Libre'}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div className="card-box">
           <div className="box-header">
             <h3>📍 Sites Physiques d'Exploitation ({sites.length})</h3>
           </div>
-          <table className="app-table">
-            <thead>
-              <tr>
-                <th>Nom du Site</th>
-                <th>Localisation</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sites.map((site) => (
-                <tr key={site.id}>
-                  <td>
-                    <strong>{site.name}</strong>
-                  </td>
-                  <td>{site.location}</td>
-                  <td>{site.notes}</td>
+          <div className="table-responsive">
+            <table className="app-table">
+              <thead>
+                <tr>
+                  <th>Nom du Site</th>
+                  <th>Localisation</th>
+                  <th>Description</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {sites.map((site) => (
+                  <tr key={site.id}>
+                    <td>
+                      <strong>{site.name}</strong>
+                    </td>
+                    <td>{site.location}</td>
+                    <td>{site.notes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 

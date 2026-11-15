@@ -1206,3 +1206,181 @@ body {
 .text-danger { color: #dc2626 !important; }
 .text-center { text-align: center; }
 .text-right { text-align: right; }
+
+/* Évite qu'un contenu trop large n'élargisse une colonne de grille. */
+.log-layout-grid > *,
+.sales-layout-grid > *,
+.charts-grid > * {
+  min-width: 0;
+}
+
+/* Ajustements pour les écrans étroits */
+@media (max-width: 640px) {
+  .header-top {
+    align-items: flex-start;
+    padding: 0.75rem;
+  }
+
+  .brand-group {
+    min-width: 0;
+    align-items: flex-start;
+  }
+
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    font-size: 1.6rem;
+  }
+
+  .brand-title-wrap {
+    flex-wrap: wrap;
+    gap: 0.2rem 0.4rem;
+  }
+
+  .brand-title {
+    font-size: 1.2rem;
+    line-height: 1.2;
+  }
+
+  .brand-tag {
+    font-size: 0.6rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.72rem;
+  }
+
+  .header-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .role-switcher {
+    min-width: 0;
+    padding: 3px;
+  }
+
+  .role-buttons {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .role-btn {
+    flex: 1;
+    min-width: 0;
+    padding: 0.4rem 0.3rem;
+    font-size: 0.68rem;
+    line-height: 1.2;
+    white-space: normal;
+  }
+
+  .settings-btn {
+    padding: 0.4rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  .header-nav {
+    gap: 0.15rem;
+    padding-inline: 0.5rem;
+  }
+
+  .nav-tab {
+    gap: 0.3rem;
+    padding: 0.65rem 0.6rem;
+    font-size: 0.78rem;
+  }
+
+  .main-content {
+    padding: 1rem 0.75rem;
+  }
+
+  .kpi-card,
+  .chart-card,
+  .card-box,
+  .batch-card,
+  .stock-card {
+    min-width: 0;
+  }
+
+  .chart-card {
+    padding: 0.75rem;
+  }
+
+  .chart-card-header,
+  .chart-header-row,
+  .box-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .chart-wrapper {
+    height: 210px;
+  }
+
+  .card-box {
+    padding: 0.9rem;
+  }
+
+  .table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .batches-summary-table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .app-table {
+    min-width: 600px;
+  }
+
+  .modal-overlay {
+    align-items: flex-start;
+    padding: max(0.5rem, env(safe-area-inset-top)) 0.5rem max(0.5rem, env(safe-area-inset-bottom));
+  }
+
+  .modal-window {
+    max-height: calc(100vh - 1rem);
+    max-height: calc(100dvh - 1rem);
+    padding: 1rem;
+  }
+
+  .modal-actions,
+  .action-buttons-wrap {
+    flex-wrap: wrap;
+  }
+
+  .app-footer {
+    padding: 1rem 0.75rem;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .header-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .settings-btn {
+    justify-self: end;
+  }
+
+  .kpi-value {
+    font-size: 1.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  .modal-overlay {
+    padding-inline: 0.35rem;
+  }
+
+  .modal-window {
+    padding: 0.85rem;
+  }
+}
