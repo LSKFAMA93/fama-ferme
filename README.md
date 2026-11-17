@@ -52,7 +52,9 @@ Conçue spécifiquement pour répondre aux exigences du **Cahier des Charges - F
 - 🚜 **Mode Agent Terrain** : Interface simplifiée pour les gérants et ouvriers, centrée sur la saisie journalière rapide et la vente directe au comptoir.
 
 ### 9. Mode Hors-Ligne & Sauvegarde
-- Fonctionne hors-ligne grâce à la persistance `localStorage` (clé `fama-ferme-data-v1`).
+- Les saisies sont conservées sur l'appareil grâce à `localStorage` (clé `fama-ferme-data-v1`).
+- Le service worker met en cache l'application pour permettre son ouverture hors ligne après un premier chargement connecté.
+- L'application web est installable comme PWA sur les navigateurs compatibles ; l'état de connexion est affiché dans l'en-tête.
 - Bouton **Export JSON** pour sauvegarder l'intégralité des données sur son téléphone ou PC.
 - Bouton **Import JSON** pour restaurer ou synchroniser les données.
 

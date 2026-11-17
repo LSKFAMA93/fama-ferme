@@ -1,7 +1,18 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Header({ currentTab, setCurrentTab, userRole, setUserRole, onOpenSettings }) {
   const isAdmin = userRole === 'admin'
+  const [isOnline, setIsOnline] = useState(navigator.onLine)
+
+  useEffect(() => {
+    const updateConnectionStatus = () => setIsOnline(navigator.onLine)
+    window.addEventListener('online', updateConnectionStatus)
+    window.addEventListener('offline', updateConnectionStatus)
+    return () => {
+      window.removeEventListener('online', updateConnectionStatus)
+      window.removeEventListener('offline', updateConnectionStatus)
+    }
+  }, [])
 
   const navItems = [
     { id: 'dashboard', label: 'Tableau de bord', icon: '📊', adminOnly: false },
@@ -29,6 +40,11 @@ export default function Header({ currentTab, setCurrentTab, userRole, setUserRol
         </div>
 
         <div className="header-actions">
+          <span className={`connection-status ${isOnline ? 'online' : 'offline'}`} role="status">
+            <span className="connection-status-dot" aria-hidden="true" />
+            {isOnline ? 'En ligne' : 'Hors ligne · données locales'}
+          </span>
+
           {/* Sélecteur de Rôle (Admin vs Agent de Saisie) */}
           <div className="role-switcher">
             <span className="role-label">Mode d'accès :</span>

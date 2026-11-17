@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { formatFCFA, formatDateFr } from '../utils/helpers'
 
 export default function FinanceManager({ data, onAddExpense, onDeleteExpense }) {

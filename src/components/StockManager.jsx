@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { formatFCFA, formatDateFr } from '../utils/helpers'
+import { useState } from 'react'
+import { formatFCFA } from '../utils/helpers'
 
 export default function StockManager({ data, onAddStockItem, onUpdateStockQuantity, userRole }) {
   const { stores = [], inventoryItems = [] } = data

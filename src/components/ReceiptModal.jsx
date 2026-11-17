@@ -1,4 +1,3 @@
-import React from 'react'
 import { formatFCFA, formatDateFr } from '../utils/helpers'
 
 export default function ReceiptModal({ sale, onClose }) {

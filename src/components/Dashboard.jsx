@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -47,6 +47,9 @@ export default function Dashboard({ data, onNavigate, userRole }) {
   const todayEggsIntact = displayLogs.reduce((sum, l) => sum + (Number(l.eggsIntact) || 0), 0)
   const todayEggsBroken = displayLogs.reduce((sum, l) => sum + (Number(l.eggsBroken) || 0), 0)
   const todayTotalEggs = todayEggsIntact + todayEggsBroken
+  const todayMortality = todayLogs.reduce((sum, l) => sum + (Number(l.mortality) || 0), 0)
+  const todayFeedKg = todayLogs.reduce((sum, l) => sum + (Number(l.feedQuantityKg) || 0), 0)
+  const todayWaterLiters = todayLogs.reduce((sum, l) => sum + (Number(l.waterQuantityL) || 0), 0)
   const todayBrokenPercent = todayTotalEggs > 0 ? ((todayEggsBroken / todayTotalEggs) * 100).toFixed(1) : '0.0'
 
   // Pondeuses actives
@@ -69,15 +72,27 @@ export default function Dashboard({ data, onNavigate, userRole }) {
     (item) => Number(item.quantity) <= Number(item.minAlertThreshold)
   )
 
-  // 2. Préparation des données pour les graphiques (7 ou 30 jours)
-  // On regroupe les logs par date
-  const sortedLogs = [...dailyLogs].sort((a, b) => a.date.localeCompare(b.date))
-  const recentLogs = sortedLogs.slice(-periodDays)
+  // 2. Préparation des données pour les graphiques (7 ou 30 jours), regroupées par jour.
+  const periodDates = Array.from({ length: periodDays }, (_, index) => {
+    const date = new Date()
+    date.setDate(date.getDate() - (periodDays - index - 1))
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${date.getFullYear()}-${month}-${day}`
+  })
+  const logsByDate = new Map()
+  dailyLogs.forEach((log) => {
+    const totals = logsByDate.get(log.date) || { eggsIntact: 0, eggsBroken: 0, mortality: 0 }
+    totals.eggsIntact += Number(log.eggsIntact) || 0
+    totals.eggsBroken += Number(log.eggsBroken) || 0
+    totals.mortality += Number(log.mortality) || 0
+    logsByDate.set(log.date, totals)
+  })
 
-  const dateLabels = recentLogs.map((l) => formatDateFr(l.date))
-  const eggProductionData = recentLogs.map((l) => Number(l.eggsIntact) || 0)
-  const eggBrokenData = recentLogs.map((l) => Number(l.eggsBroken) || 0)
-  const mortalityData = recentLogs.map((l) => Number(l.mortality) || 0)
+  const dateLabels = periodDates.map(formatDateFr)
+  const eggProductionData = periodDates.map((date) => logsByDate.get(date)?.eggsIntact || 0)
+  const eggBrokenData = periodDates.map((date) => logsByDate.get(date)?.eggsBroken || 0)
+  const mortalityData = periodDates.map((date) => logsByDate.get(date)?.mortality || 0)
 
   // Données Chart.js : Production d'œufs
   const eggsChartData = {
@@ -195,17 +210,6 @@ export default function Dashboard({ data, onNavigate, userRole }) {
 
       {/* Cartes KPI Principales */}
       <div className="kpi-grid">
-        <div className="kpi-card">
-          <div className="kpi-header">
-            <span className="kpi-title">Bandes Actives</span>
-            <span className="kpi-icon">🐔</span>
-          </div>
-          <div className="kpi-value">{activeBatches.length}</div>
-          <div className="kpi-sub">
-            {batches.length} lots au total dans l’infrastructure
-          </div>
-        </div>
-
         <div className="kpi-card highlight-green">
           <div className="kpi-header">
             <span className="kpi-title">Effectif Vivant Actuel</span>
@@ -215,6 +219,15 @@ export default function Dashboard({ data, onNavigate, userRole }) {
           <div className="kpi-sub">
             Sujets sur site (déduction auto des pertes)
           </div>
+        </div>
+
+        <div className="kpi-card">
+          <div className="kpi-header">
+            <span className="kpi-title">Pertes du Jour</span>
+            <span className="kpi-icon">📉</span>
+          </div>
+          <div className="kpi-value">{todayMortality.toLocaleString('fr-FR')}</div>
+          <div className="kpi-sub">Sujets déclarés morts aujourd'hui</div>
         </div>
 
         <div className="kpi-card highlight-amber">
@@ -235,14 +248,26 @@ export default function Dashboard({ data, onNavigate, userRole }) {
 
         <div className="kpi-card">
           <div className="kpi-header">
-            <span className="kpi-title">Chiffre d’Affaires Mois</span>
+            <span className="kpi-title">Consommation du Jour</span>
+            <span className="kpi-icon">🌽</span>
+          </div>
+          <div className="kpi-value">{todayFeedKg.toLocaleString('fr-FR')} kg</div>
+          <div className="kpi-sub">
+            Eau : <strong>{todayWaterLiters.toLocaleString('fr-FR')} L</strong>
+          </div>
+        </div>
+
+        <div className="kpi-card">
+          <div className="kpi-header">
+            <span className="kpi-title">{isAdmin ? 'Trésorerie du Mois' : 'Chiffre d’Affaires Mois'}</span>
             <span className="kpi-icon">💰</span>
           </div>
-          <div className="kpi-value">{formatFCFA(monthRevenue)}</div>
+          <div className="kpi-value">{formatFCFA(isAdmin ? monthNet : monthRevenue)}</div>
           <div className="kpi-sub">
             {isAdmin ? (
               <span>
-                Dépenses : {formatFCFA(monthExpenseTotal)} | Marge :{' '}
+                Recettes : {formatFCFA(monthRevenue)} | Dépenses : {formatFCFA(monthExpenseTotal)}
+                {' '}| Solde net :{' '}
                 <strong style={{ color: monthNet >= 0 ? '#10b981' : '#ef4444' }}>
                   {formatFCFA(monthNet)}
                 </strong>

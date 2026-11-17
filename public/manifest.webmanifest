@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "Fama-Ferme",
+  "short_name": "Fama-Ferme",
+  "description": "Gestion avicole, saisies terrain, stocks et finances.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f8",
+  "theme_color": "#1b4332",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

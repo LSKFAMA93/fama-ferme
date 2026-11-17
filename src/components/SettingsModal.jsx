@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { initialData } from '../data/initialData'
 
 export default function SettingsModal({ data, onRestoreData, onClose }) {

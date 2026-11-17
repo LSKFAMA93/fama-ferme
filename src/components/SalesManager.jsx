@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { formatFCFA, formatDateFr } from '../utils/helpers'
 import ReceiptModal from './ReceiptModal'
 
-export default function SalesManager({ data, onAddSale, onAddClient, userRole }) {
+export default function SalesManager({ data, onAddSale, onAddClient }) {
   const { clients = [], sales = [] } = data
 
   const [showSaleModal, setShowSaleModal] = useState(false)

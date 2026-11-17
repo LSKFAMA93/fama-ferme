@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { formatDateFr, getBatchLiveCount } from '../utils/helpers'
 
 export default function DailyLogForm({ data, onAddLog, onDeleteLog, userRole }) {
@@ -15,6 +15,7 @@ export default function DailyLogForm({ data, onAddLog, onDeleteLog, userRole }) 
     mortalityReason: '',
     feedItemId: inventoryItems.find((i) => i.category === 'aliment')?.id || '',
     feedQuantityKg: '',
+    waterQuantityL: '',
     healthCare: '',
     cleaning: '',
     notes: '',
@@ -45,6 +46,7 @@ export default function DailyLogForm({ data, onAddLog, onDeleteLog, userRole }) 
       mortalityReason: formData.mortalityReason.trim(),
       feedItemId: formData.feedItemId,
       feedQuantityKg: Number(formData.feedQuantityKg) || 0,
+      waterQuantityL: Number(formData.waterQuantityL) || 0,
       healthCare: formData.healthCare.trim(),
       cleaning: formData.cleaning.trim(),
       notes: formData.notes.trim(),
@@ -64,6 +66,7 @@ export default function DailyLogForm({ data, onAddLog, onDeleteLog, userRole }) 
       mortality: '0',
       mortalityReason: '',
       feedQuantityKg: '',
+      waterQuantityL: '',
       healthCare: '',
       cleaning: '',
       notes: '',
@@ -241,6 +244,19 @@ export default function DailyLogForm({ data, onAddLog, onDeleteLog, userRole }) 
                       : 'Norme pondeuse : 115g à 125g / jour'}
                   </small>
                 </div>
+
+                <div className="form-group">
+                  <label>Consommation d'eau (en litres)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.5"
+                    className="form-control"
+                    placeholder="Ex: 180"
+                    value={formData.waterQuantityL}
+                    onChange={(e) => setFormData({ ...formData, waterQuantityL: e.target.value })}
+                  />
+                </div>
               </div>
             </fieldset>
 
@@ -318,6 +334,7 @@ export default function DailyLogForm({ data, onAddLog, onDeleteLog, userRole }) 
                   <th>Œufs (Valides / Cassés)</th>
                   <th>Morts</th>
                   <th>Aliment (Kg)</th>
+                  <th>Eau (L)</th>
                   <th>Soins</th>
                   <th>Action</th>
                 </tr>
@@ -325,7 +342,7 @@ export default function DailyLogForm({ data, onAddLog, onDeleteLog, userRole }) 
               <tbody>
                 {filteredLogs.length === 0 ? (
                   <tr>
-                    <td colSpan="7" className="text-center py-4">
+                    <td colSpan="8" className="text-center py-4">
                       Aucun relevé enregistré pour le moment.
                     </td>
                   </tr>
@@ -360,6 +377,7 @@ export default function DailyLogForm({ data, onAddLog, onDeleteLog, userRole }) 
                           )}
                         </td>
                         <td>{log.feedQuantityKg ? `${log.feedQuantityKg} kg` : '-'}</td>
+                        <td>{log.waterQuantityL ? `${log.waterQuantityL} L` : '-'}</td>
                         <td>
                           <small>{log.healthCare || log.cleaning || '-'}</small>
                         </td>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { formatDateFr, formatFCFA, getBatchLiveCount } from '../utils/helpers'
+import { useState } from 'react'
+import { formatDateFr, getBatchLiveCount } from '../utils/helpers'
 
 export default function BatchesAndSites({ data, onAddBatch, onAddBuilding, onAddSite, onDeleteBatch, userRole }) {
   const { sites = [], buildings = [], batches = [], dailyLogs = [] } = data

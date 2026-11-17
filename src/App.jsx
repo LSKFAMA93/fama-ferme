@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Dashboard from './components/Dashboard'
 import DailyLogForm from './components/DailyLogForm'
@@ -253,7 +253,6 @@ function App() {
             data={data}
             onAddSale={handleAddSale}
             onAddClient={handleAddClient}
-            userRole={userRole}
           />
         )}
 

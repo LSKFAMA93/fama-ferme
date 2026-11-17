@@ -1384,3 +1384,166 @@ body {
     padding: 0.85rem;
   }
 }
+
+/* Ajustements fluides et seuils KPI pour mobiles, tablettes et grands écrans. */
+html,
+body,
+#root,
+.app-container,
+.main-content {
+  min-width: 0;
+  max-width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.main-content {
+  padding-inline: clamp(0.75rem, 3vw, 1.5rem);
+}
+
+.view-header h2,
+.section-title {
+  font-size: clamp(1.1rem, 2.8vw, 1.5rem);
+  overflow-wrap: anywhere;
+}
+
+.brand-title {
+  font-size: clamp(1.05rem, 3vw, 1.4rem);
+}
+
+.kpi-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.kpi-card,
+.chart-card,
+.card-box,
+.batch-card,
+.stock-card,
+.cat-progress-card {
+  min-width: 0;
+}
+
+.kpi-value {
+  font-size: clamp(1.4rem, 3vw, 1.75rem);
+  overflow-wrap: anywhere;
+}
+
+.chart-header-row,
+.chart-card-header,
+.box-header {
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chart-card-header h3 {
+  min-width: 0;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  overflow-wrap: anywhere;
+}
+
+.table-responsive,
+.batches-summary-table-wrap {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-table {
+  min-width: 37.5rem;
+}
+
+.batch-cards-grid,
+.stock-cards-grid,
+.category-breakdown-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.connection-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.connection-status.offline {
+  color: #92400e;
+}
+
+.connection-status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: 0 0 0.5rem;
+  border-radius: 50%;
+  background: #16a34a;
+}
+
+.connection-status.offline .connection-status-dot {
+  background: #d97706;
+}
+
+@media (min-width: 480px) {
+  .kpi-grid,
+  .batch-cards-grid,
+  .stock-cards-grid,
+  .category-breakdown-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 769px) {
+  .kpi-grid,
+  .batch-cards-grid,
+  .stock-cards-grid,
+  .category-breakdown-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .kpi-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 479px) {
+  .header-actions {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .connection-status {
+    grid-column: 1 / -1;
+  }
+
+  .period-pills {
+    max-width: 100%;
+  }
+
+  .pill-btn {
+    padding-inline: 0.45rem;
+    font-size: 0.68rem;
+  }
+
+  .fieldset-group {
+    padding: 0.75rem;
+  }
+
+  .client-item-card {
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .client-info-main,
+  .client-info-side {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
